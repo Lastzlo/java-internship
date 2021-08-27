@@ -98,6 +98,7 @@ public class CustomLinkedListImpl <E> implements CustomLinkedList<E> {
     private class IteratorImpl implements ListIterator<E> {
 
         private Node<E> nextNode;
+        private Node<E> currNode;
         private Node<E> prevNode;
 
         // hasModified means that we can remove value from collection
@@ -106,9 +107,9 @@ public class CustomLinkedListImpl <E> implements CustomLinkedList<E> {
         private boolean hasModified;
 
         public IteratorImpl() {
-            this.nextNode = first;
-            this.prevNode = null;
-            this.hasModified = false;
+            nextNode = first;
+            prevNode = null;
+            hasModified = false;
         }
 
         @Override
@@ -118,12 +119,14 @@ public class CustomLinkedListImpl <E> implements CustomLinkedList<E> {
 
         @Override
         public E next() {
+            // step forward
             if(nextNode == null) throw new NoSuchElementException();
+            currNode = nextNode;
             prevNode = nextNode;
             nextNode = nextNode.next;
 
             hasModified = true;
-            return prevNode.value;
+            return currNode.value;
         }
 
         @Override
@@ -133,12 +136,14 @@ public class CustomLinkedListImpl <E> implements CustomLinkedList<E> {
 
         @Override
         public E previous() {
+            // step back
             if(prevNode == null) throw new NoSuchElementException();
+            currNode = prevNode;
             nextNode = prevNode;
             prevNode = prevNode.prev;
 
             hasModified = true;
-            return nextNode.value;
+            return currNode.value;
         }
 
         @Override
@@ -154,16 +159,7 @@ public class CustomLinkedListImpl <E> implements CustomLinkedList<E> {
         @Override
         public void remove() {
             if(!hasModified) throw new IllegalStateException();
-            unlink(prevNode);
-
-            // после того как убрали связь с prevNode
-            // нужно задать prevNode значение
-            if (nextNode == null) {
-                prevNode = null;
-            } else {
-                prevNode = nextNode.prev;
-            }
-
+            unlink(currNode);
             hasModified = false;
         }
 
