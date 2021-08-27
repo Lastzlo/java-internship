@@ -88,23 +88,32 @@ public class CustomLinkedListImpl <E> implements CustomLinkedList<E> {
 
     private class IteratorImpl implements Iterator<E> {
 
-        private Node<E> current;
+        private Node<E> nextNode;
+        private Node<E> prevNode;
+
+        // hasModified means that we can remove value from collection
+        // hasModified set TRUE only after next() or previous(), or would be
+        // generated throws IllegalStateException
+        private boolean hasModified;
 
         public IteratorImpl() {
-            current = first;
+            this.nextNode = first;
+            this.hasModified = false;
         }
 
         @Override
         public boolean hasNext() {
-            return current != null;
+            return this.nextNode != null;
         }
 
         @Override
         public E next() {
-            if(current == null) throw new NoSuchElementException();
-            E value = current.value;
-            current = current.next;
-            return value;
+            if(nextNode == null) throw new NoSuchElementException();
+            prevNode = nextNode;
+            nextNode = nextNode.next;
+
+            hasModified = true;
+            return prevNode.value;
         }
 
         @Override
