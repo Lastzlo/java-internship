@@ -111,6 +111,9 @@ public class CustomLinkedListImpl <E> implements CustomLinkedList<E> {
         // if nextNode contain var isNextCurrentNode == true
         private boolean isNextCurrentNode = true;
 
+        // contain index of current Node
+        private int currentIndex = 0;
+
         public IteratorImpl() {
             nextNode = first;
             prevNode = null;
@@ -131,6 +134,7 @@ public class CustomLinkedListImpl <E> implements CustomLinkedList<E> {
 
             isNextCurrentNode = false;
             hasModified = true;
+            currentIndex++;
             return prevNode.value;
         }
 
@@ -148,17 +152,18 @@ public class CustomLinkedListImpl <E> implements CustomLinkedList<E> {
 
             isNextCurrentNode = true;
             hasModified = true;
+            currentIndex--;
             return nextNode.value;
         }
 
         @Override
         public int nextIndex() {
-            return 0;
+            return Math.min(size, currentIndex + 1);
         }
 
         @Override
         public int previousIndex() {
-            return 0;
+            return (currentIndex - 1 <= 0) ? -1 : (currentIndex - 1);
         }
 
         @Override
@@ -172,6 +177,7 @@ public class CustomLinkedListImpl <E> implements CustomLinkedList<E> {
             }
 
             hasModified = false;
+            currentIndex--;
         }
 
         @Override
