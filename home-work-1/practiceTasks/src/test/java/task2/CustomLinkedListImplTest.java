@@ -254,7 +254,7 @@ class CustomLinkedListImplTest {
 
         ListIterator<String> iterator = customLinkedList.getIterator();
 
-        assertThrows(IllegalStateException.class, ()-> iterator.remove()); //метод должен быть вызван после методов next() или previous(), иначе будет сгенерировано исключение IlligalStateException
+        assertThrows(IllegalStateException.class, iterator::remove); //метод должен быть вызван после методов next() или previous(), иначе будет сгенерировано исключение IlligalStateException
         assertEquals(1, customLinkedList.getSize());
     }
 
@@ -395,4 +395,58 @@ class CustomLinkedListImplTest {
 
     }
 
+    @Test
+    void getIterator_whenAdd_butCollectionEmpty_thenCorrect() {
+        CustomLinkedList<String> customLinkedList = new CustomLinkedListImpl<>();
+
+        ListIterator<String> iterator = customLinkedList.getIterator();
+        iterator.add("one");
+
+        assertEquals(customLinkedList.getSize(), 1);
+        assertFalse(iterator.hasNext());
+        assertEquals(iterator.previous(), "one");
+        assertFalse(iterator.hasPrevious());
+    }
+
+    @Test
+    void getIterator_whenAdd_butNextNodeNotNull_thenCorrect() {
+        CustomLinkedList<String> customLinkedList = new CustomLinkedListImpl<>();
+        customLinkedList.add("one");
+
+        ListIterator<String> iterator = customLinkedList.getIterator();
+        iterator.add("two");
+
+        assertEquals(customLinkedList.getSize(), 2);
+        assertTrue(iterator.hasNext());
+        assertEquals(iterator.next(), "one");
+    }
+
+    @Test
+    void getIterator_whenAdd_butNextNodeNull_thenCorrect() {
+        CustomLinkedList<String> customLinkedList = new CustomLinkedListImpl<>();
+        customLinkedList.add("one");
+
+        ListIterator<String> iterator = customLinkedList.getIterator();
+        iterator.next();
+        iterator.add("two");
+
+        assertEquals(customLinkedList.getSize(), 2);
+        assertFalse(iterator.hasNext());
+        assertEquals(iterator.previous(), "one");
+    }
+
+    @Test
+    void getIterator_whenAdd_butPrevNodeNull_thenCorrect() {
+        CustomLinkedList<String> customLinkedList = new CustomLinkedListImpl<>();
+        customLinkedList.add("one");
+
+        ListIterator<String> iterator = customLinkedList.getIterator();
+        iterator.next();//one
+        iterator.previous(); //one
+        iterator.add("two");
+
+        assertEquals(customLinkedList.getSize(), 2);
+        assertTrue(iterator.hasNext());
+        assertEquals(iterator.next(), "one");
+    }
 }

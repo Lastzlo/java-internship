@@ -198,7 +198,22 @@ public class CustomLinkedListImpl <E> implements CustomLinkedList<E> {
 
         @Override
         public void add(E e) {
+            if(nextNode == first) {
+                Node<E> nextBuff = this.nextNode;
+                first = new Node<>(null, e, nextBuff);
+                prevNode = first;
+            } else {
+                Node<E> bufferNext = prevNode.next;
+                Node<E> newNode = new Node<>(prevNode, e, prevNode.next);
+                prevNode.next = newNode;
 
+                if(bufferNext != null) {
+                    bufferNext.prev = newNode;
+                }
+            }
+
+            size++;
+            currentIndex++;
         }
 
 
