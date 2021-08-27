@@ -85,8 +85,8 @@ public class CustomLinkedListImpl <E> implements CustomLinkedList<E> {
 
     private static class Node<E> {
         E value;
-        Node<E> next = null;
-        Node<E> prev = null;
+        Node<E> next;
+        Node<E> prev;
 
         public Node(Node<E> prev, E value, Node<E> next) {
             this.value = value;
@@ -98,13 +98,18 @@ public class CustomLinkedListImpl <E> implements CustomLinkedList<E> {
     private class IteratorImpl implements ListIterator<E> {
 
         private Node<E> nextNode;
-        private Node<E> currNode;
         private Node<E> prevNode;
 
         // hasModified means that we can remove value from collection
         // hasModified set TRUE only after next() or previous(), or would be
         // generated throws IllegalStateException
         private boolean hasModified;
+
+        // isNextCurrentNode means what node (nextNode or prevNode)
+        // contain current node value
+        // if prevNode contain var isNextCurrentNode == false
+        // if nextNode contain var isNextCurrentNode == true
+        private boolean isNextCurrentNode = true;
 
         public IteratorImpl() {
             nextNode = first;
@@ -121,12 +126,12 @@ public class CustomLinkedListImpl <E> implements CustomLinkedList<E> {
         public E next() {
             // step forward
             if(nextNode == null) throw new NoSuchElementException();
-            currNode = nextNode;
             prevNode = nextNode;
             nextNode = nextNode.next;
 
+            isNextCurrentNode = false;
             hasModified = true;
-            return currNode.value;
+            return prevNode.value;
         }
 
         @Override
@@ -138,12 +143,12 @@ public class CustomLinkedListImpl <E> implements CustomLinkedList<E> {
         public E previous() {
             // step back
             if(prevNode == null) throw new NoSuchElementException();
-            currNode = prevNode;
             nextNode = prevNode;
             prevNode = prevNode.prev;
 
+            isNextCurrentNode = true;
             hasModified = true;
-            return currNode.value;
+            return nextNode.value;
         }
 
         @Override
@@ -159,7 +164,13 @@ public class CustomLinkedListImpl <E> implements CustomLinkedList<E> {
         @Override
         public void remove() {
             if(!hasModified) throw new IllegalStateException();
-            unlink(currNode);
+
+            if (isNextCurrentNode) {
+                unlink(nextNode);
+            } else {
+                unlink(prevNode);
+            }
+
             hasModified = false;
         }
 
