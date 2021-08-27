@@ -258,4 +258,59 @@ class CustomLinkedListImplTest {
         assertEquals(1, customLinkedList.getSize());
     }
 
+    @Test
+    void getIterator_whenNextIndex_thenCorrect() {
+        CustomLinkedList<String> customLinkedList = new CustomLinkedListImpl<>();
+        customLinkedList.add("one");
+        customLinkedList.add("one");
+        customLinkedList.add("one");
+        customLinkedList.add("one");
+
+        ListIterator<String> iterator = customLinkedList.getIterator();
+
+        assertEquals(iterator.next(), "one");
+        assertEquals(iterator.nextIndex(), 2);
+        assertEquals(iterator.next(), "one");
+        assertEquals(iterator.nextIndex(), 3);
+
+    }
+
+    @Test
+    void getIterator_whenNextIndexMoreThanSize_thenCorrect() {
+        CustomLinkedList<String> customLinkedList = new CustomLinkedListImpl<>();
+        customLinkedList.add("one");
+        customLinkedList.add("one");
+        customLinkedList.add("one");
+        customLinkedList.add("one");
+
+        ListIterator<String> iterator = customLinkedList.getIterator();
+
+        while (iterator.hasNext()) {
+            iterator.next();
+            assertTrue(iterator.nextIndex() <= customLinkedList.getSize());
+        }
+
+    }
+
+    @Test
+    void getIterator_whenPreviousIndex_thenCorrect() {
+        CustomLinkedList<String> customLinkedList = new CustomLinkedListImpl<>();
+        customLinkedList.add("one");
+        customLinkedList.add("one");
+        customLinkedList.add("one");
+        customLinkedList.add("one");
+
+        ListIterator<String> iterator = customLinkedList.getIterator();
+
+        assertEquals(iterator.next(), "one");
+        assertEquals(iterator.previousIndex(), -1);
+        assertEquals(iterator.next(), "one");
+        assertEquals(iterator.previousIndex(), 1);
+        assertEquals(iterator.next(), "one");
+        assertEquals(iterator.previousIndex(), 2);
+        iterator.previous();
+        assertEquals(iterator.previousIndex(), 1);
+
+    }
+
 }
