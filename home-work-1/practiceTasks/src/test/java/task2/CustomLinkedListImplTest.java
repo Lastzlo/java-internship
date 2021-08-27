@@ -247,4 +247,15 @@ class CustomLinkedListImplTest {
         assertEquals(1, customLinkedList.getSize());
     }
 
+    @Test
+    void getIterator_whenRemove_thenIllegalStateException() {
+        CustomLinkedList<String> customLinkedList = new CustomLinkedListImpl<>();
+        customLinkedList.add("one");
+
+        ListIterator<String> iterator = customLinkedList.getIterator();
+
+        assertThrows(IllegalStateException.class, ()-> iterator.remove()); //метод должен быть вызван после методов next() или previous(), иначе будет сгенерировано исключение IlligalStateException
+        assertEquals(1, customLinkedList.getSize());
+    }
+
 }
