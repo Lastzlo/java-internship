@@ -155,6 +155,15 @@ public class CustomLinkedListImpl <E> implements CustomLinkedList<E> {
         public void remove() {
             if(!hasModified) throw new IllegalStateException();
             unlink(prevNode);
+
+            // после того как убрали связь с prevNode
+            // нужно задать prevNode значение
+            if (nextNode == null) {
+                prevNode = null;
+            } else {
+                prevNode = nextNode.prev;
+            }
+
             hasModified = false;
         }
 

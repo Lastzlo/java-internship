@@ -224,4 +224,27 @@ class CustomLinkedListImplTest {
 
     }
 
+    @Test
+    void getIterator_whenRemoveButUsePrevious_thenCorrect() {
+        CustomLinkedList<String> customLinkedList = new CustomLinkedListImpl<>();
+        customLinkedList.add("one");
+        customLinkedList.add("two");
+        customLinkedList.add("three");
+
+        ListIterator<String> iterator = customLinkedList.getIterator();
+        assertEquals(iterator.next(), "one");
+        assertEquals(iterator.next(), "two");
+        assertEquals(iterator.next(), "three");
+
+        assertEquals(iterator.previous(), "three");
+        iterator.remove();  //удалили three
+
+        assertEquals(2, customLinkedList.getSize());
+
+        assertEquals(iterator.previous(), "two");
+        iterator.remove();
+
+        assertEquals(1, customLinkedList.getSize());
+    }
+
 }
