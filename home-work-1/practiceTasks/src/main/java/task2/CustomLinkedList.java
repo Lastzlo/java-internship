@@ -1,6 +1,6 @@
 package task2;
 
-import java.util.Iterator;
+import java.util.ListIterator;
 
 public interface CustomLinkedList<E>{
 
@@ -8,6 +8,6 @@ public interface CustomLinkedList<E>{
     boolean remove(Object o);
 
     int getSize();
-    Iterator<E> getIterator();
+    ListIterator<E> getIterator();
 
 }

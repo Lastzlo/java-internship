@@ -1,14 +1,11 @@
 package task2;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 
 class CustomLinkedListImplTest {
 
@@ -74,7 +71,21 @@ class CustomLinkedListImplTest {
 
         Iterator<String> iterator = customLinkedList.getIterator();
 
-        Assertions.assertFalse(iterator.hasNext());
+        assertFalse(iterator.hasNext());
+    }
+
+    @Test
+    void getIterator_whenHasNext_thenTrue() {
+        CustomLinkedList<String> customLinkedList = new CustomLinkedListImpl<>();
+        customLinkedList.add("one");
+        customLinkedList.add("two");
+        customLinkedList.add("three");
+
+        ListIterator<String> iterator = customLinkedList.getIterator();
+        iterator.next();
+        iterator.next();
+
+        assertTrue(iterator.hasNext());
     }
 
     @Test
@@ -83,8 +94,44 @@ class CustomLinkedListImplTest {
 
         Iterator<String> iterator = customLinkedList.getIterator();
 
-        Assertions.assertThrows(NoSuchElementException.class, iterator::next);
+        assertThrows(NoSuchElementException.class, iterator::next);
     }
+
+    @Test
+    void getIterator_whenNext_thenReturnValue() {
+        CustomLinkedList<String> customLinkedList = new CustomLinkedListImpl<>();
+        customLinkedList.add("one");
+        customLinkedList.add("two");
+        customLinkedList.add("three");
+
+        ListIterator<String> iterator = customLinkedList.getIterator();
+        iterator.next();
+        assertEquals(iterator.next(), "two");
+    }
+
+    @Test
+    void getIterator_whenHasPrevious_thenFalse() {
+        CustomLinkedList<String> customLinkedList = new CustomLinkedListImpl<>();
+
+        ListIterator<String> iterator = customLinkedList.getIterator();
+
+        assertFalse(iterator.hasPrevious());
+    }
+
+    @Test
+    void getIterator_whenHasPrevious_thenTrue() {
+        CustomLinkedList<String> customLinkedList = new CustomLinkedListImpl<>();
+        customLinkedList.add("one");
+        customLinkedList.add("two");
+        customLinkedList.add("three");
+
+        ListIterator<String> iterator = customLinkedList.getIterator();
+        iterator.next();
+        iterator.next();
+
+        assertTrue(iterator.hasPrevious());
+    }
+
 
     @Test
     void getIterator_whenListContain3Elements_thenCorrect() {
@@ -100,9 +147,9 @@ class CustomLinkedListImplTest {
             resultList.add(iterator.next());
         }
 
-        Assertions.assertTrue(resultList.contains("one"));
-        Assertions.assertTrue(resultList.contains("two"));
-        Assertions.assertTrue(resultList.contains("three"));
+        assertTrue(resultList.contains("one"));
+        assertTrue(resultList.contains("two"));
+        assertTrue(resultList.contains("three"));
         assertEquals(3, resultList.size());
     }
 
@@ -118,9 +165,9 @@ class CustomLinkedListImplTest {
         Iterator<String> iterator = customLinkedList.getIterator();
         iterator.forEachRemaining(resultList::add);
 
-        Assertions.assertTrue(resultList.contains("one"));
-        Assertions.assertTrue(resultList.contains("two"));
-        Assertions.assertTrue(resultList.contains("three"));
+        assertTrue(resultList.contains("one"));
+        assertTrue(resultList.contains("two"));
+        assertTrue(resultList.contains("three"));
         assertEquals(3, resultList.size());
     }
 
@@ -143,9 +190,10 @@ class CustomLinkedListImplTest {
         while (iterator.hasNext()) {
             resultList.add(iterator.next());
         }
-        Assertions.assertTrue(resultList.contains("two"));
-        Assertions.assertTrue(resultList.contains("three"));
+        assertTrue(resultList.contains("two"));
+        assertTrue(resultList.contains("three"));
 
 
     }
+
 }

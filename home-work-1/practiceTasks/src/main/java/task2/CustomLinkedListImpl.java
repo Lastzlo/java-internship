@@ -1,6 +1,6 @@
 package task2;
 
-import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 
@@ -79,7 +79,7 @@ public class CustomLinkedListImpl <E> implements CustomLinkedList<E> {
     }
 
     @Override
-    public Iterator<E> getIterator() {
+    public ListIterator<E> getIterator() {
         return new IteratorImpl();
     }
 
@@ -95,7 +95,7 @@ public class CustomLinkedListImpl <E> implements CustomLinkedList<E> {
         }
     }
 
-    private class IteratorImpl implements Iterator<E> {
+    private class IteratorImpl implements ListIterator<E> {
 
         private Node<E> nextNode;
         private Node<E> prevNode;
@@ -107,6 +107,7 @@ public class CustomLinkedListImpl <E> implements CustomLinkedList<E> {
 
         public IteratorImpl() {
             this.nextNode = first;
+            this.prevNode = null;
             this.hasModified = false;
         }
 
@@ -126,6 +127,26 @@ public class CustomLinkedListImpl <E> implements CustomLinkedList<E> {
         }
 
         @Override
+        public boolean hasPrevious() {
+            return this.prevNode != null;
+        }
+
+        @Override
+        public E previous() {
+            return null;
+        }
+
+        @Override
+        public int nextIndex() {
+            return 0;
+        }
+
+        @Override
+        public int previousIndex() {
+            return 0;
+        }
+
+        @Override
         public void remove() {
             if(!hasModified) throw new IllegalStateException();
             unlink(prevNode);
@@ -134,8 +155,20 @@ public class CustomLinkedListImpl <E> implements CustomLinkedList<E> {
 
         @Override
         public void forEachRemaining(Consumer<? super E> action) {
-            Iterator.super.forEachRemaining(action);
+            ListIterator.super.forEachRemaining(action);
         }
+
+        @Override
+        public void set(E e) {
+
+        }
+
+        @Override
+        public void add(E e) {
+
+        }
+
+
     }
 
 }
