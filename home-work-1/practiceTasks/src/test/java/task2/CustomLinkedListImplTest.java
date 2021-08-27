@@ -107,28 +107,28 @@ class CustomLinkedListImplTest {
         assertEquals(3, resultList.size());
     }
 
-//    @Test
-//    void getIterator_whenRemove_thenCorrect() {
-//        CustomLinkedList<String> customLinkedList = new CustomLinkedListImpl<>();
-//        customLinkedList.add("one");
-//        customLinkedList.add("two");
-//        customLinkedList.add("three");
-//
-//        Iterator<String> iterator = customLinkedList.getIterator();
-//        iterator.hasNext();
-//        iterator.next();
-//        iterator.remove(); //"one"
-//
-//        assertEquals(2, customLinkedList.getSize());
-//
-//
-//        List<String> resultList = new ArrayList<>();
-//        while (iterator.hasNext()) {
-//            resultList.add(iterator.next());
-//        }
-//        Assertions.assertTrue(resultList.contains("two"));
-//        Assertions.assertTrue(resultList.contains("three"));
-//
-//
-//    }
+    @Test
+    void getIterator_whenRemove_thenCorrect() {
+        CustomLinkedList<String> customLinkedList = new CustomLinkedListImpl<>();
+        customLinkedList.add("one");
+        customLinkedList.add("two");
+        customLinkedList.add("three");
+
+        Iterator<String> iterator = customLinkedList.getIterator();
+        iterator.hasNext();
+        iterator.next();
+        iterator.remove(); //"one"
+
+        assertEquals(2, customLinkedList.getSize());
+
+
+        List<String> resultList = new ArrayList<>();
+        while (iterator.hasNext()) {
+            resultList.add(iterator.next());
+        }
+        Assertions.assertTrue(resultList.contains("two"));
+        Assertions.assertTrue(resultList.contains("three"));
+
+
+    }
 }
