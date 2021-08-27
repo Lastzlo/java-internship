@@ -54,11 +54,20 @@ public class CustomLinkedListImpl <E> implements CustomLinkedList<E> {
     }
 
     @Override
-    public boolean remove(E removeValue) {
-        for (Node<E> i = first; i != null; i = i.next) {
-            if(removeValue.equals(i.value)) {
-                unlink(i);
-                return true;
+    public boolean remove(Object o) {
+        if(o == null) {
+            for (Node<E> i = first; i != null; i = i.next) {
+                if(i.value == null) {
+                    unlink(i);
+                    return true;
+                }
+            }
+        } else {
+            for (Node<E> i = first; i != null; i = i.next) {
+                if(o.equals(i.value)) {
+                    unlink(i);
+                    return true;
+                }
             }
         }
 
