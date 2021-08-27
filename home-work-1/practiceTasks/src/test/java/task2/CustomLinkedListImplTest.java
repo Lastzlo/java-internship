@@ -52,6 +52,23 @@ class CustomLinkedListImplTest {
     }
 
     @Test
+    void remove_whenRemoveNullValue() {
+        CustomLinkedList<String> customLinkedList = new CustomLinkedListImpl<>();
+
+        customLinkedList.add(null);
+        customLinkedList.add("two");
+        customLinkedList.add(null);
+        customLinkedList.add("three");
+
+        assert customLinkedList.remove(null) : "it should be true";
+        assert (customLinkedList.getSize() == 3) : "it should be 3";
+
+        assert customLinkedList.remove(null) : "it should be true";
+        assert (customLinkedList.getSize() == 2) : "it should be 2";
+
+    }
+
+    @Test
     void getIterator_whenHasNext_thenFalse() {
         CustomLinkedList<String> customLinkedList = new CustomLinkedListImpl<>();
 
