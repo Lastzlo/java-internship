@@ -27,6 +27,8 @@ public class Main {
             System.out.println("iterator.next() = " + iterator.next());
         }
 
+        String get_1 = stringLinkedList.get(1);
+        System.out.println("get_1 = " + get_1);
     }
 
 
