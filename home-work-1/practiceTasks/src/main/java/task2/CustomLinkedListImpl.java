@@ -133,7 +133,12 @@ public class CustomLinkedListImpl <E> implements CustomLinkedList<E> {
 
         @Override
         public E previous() {
-            return null;
+            if(prevNode == null) throw new NoSuchElementException();
+            nextNode = prevNode;
+            prevNode = prevNode.prev;
+
+            hasModified = true;
+            return nextNode.value;
         }
 
         @Override

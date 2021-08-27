@@ -132,6 +132,34 @@ class CustomLinkedListImplTest {
         assertTrue(iterator.hasPrevious());
     }
 
+    @Test
+    void getIterator_whenPreviousHasNull_thenNoSuchElementException() {
+        CustomLinkedList<String> customLinkedList = new CustomLinkedListImpl<>();
+        customLinkedList.add("one");
+        customLinkedList.add("two");
+
+        ListIterator<String> iterator = customLinkedList.getIterator();
+        iterator.next();    //one
+
+        assertEquals(iterator.previous(), "one");   //возвращает текущий элемент и переходит к предыдущему
+        assertThrows(NoSuchElementException.class, ()-> iterator.previous()); //если нет предыдущего то генерируется исключение NoSuchElementException
+    }
+
+    @Test
+    void getIterator_whenPrevious_thenReturnValue() {
+        CustomLinkedList<String> customLinkedList = new CustomLinkedListImpl<>();
+        customLinkedList.add("one");
+        customLinkedList.add("two");
+        customLinkedList.add("three");
+
+        ListIterator<String> iterator = customLinkedList.getIterator();
+        iterator.next();    //one
+        iterator.next();    //two
+
+        assertEquals(iterator.previous(), "two");   //возвращает текущий элемент и переходит к предыдущему
+        assertEquals(iterator.previous(), "one");   //возвращает текущий элемент и переходит к предыдущему
+        assertEquals(iterator.next(), "one");       //возвращает текущий элемент и переходит к следующему
+    }
 
     @Test
     void getIterator_whenListContain3Elements_thenCorrect() {
