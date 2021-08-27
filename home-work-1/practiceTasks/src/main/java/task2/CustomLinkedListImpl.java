@@ -187,7 +187,13 @@ public class CustomLinkedListImpl <E> implements CustomLinkedList<E> {
 
         @Override
         public void set(E e) {
+            if(!hasModified) throw new IllegalStateException();
 
+            if (isNextCurrentNode) {
+                nextNode.value = e;
+            } else {
+                prevNode.value = e;
+            }
         }
 
         @Override

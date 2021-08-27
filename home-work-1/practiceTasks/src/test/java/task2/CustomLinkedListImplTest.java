@@ -313,4 +313,86 @@ class CustomLinkedListImplTest {
 
     }
 
+    @Test
+    void getIterator_whenSet_thenIllegalStateException() {
+        CustomLinkedList<String> customLinkedList = new CustomLinkedListImpl<>();
+        customLinkedList.add("one");
+        customLinkedList.add("one");
+
+        ListIterator<String> iterator = customLinkedList.getIterator();
+
+        assertThrows(IllegalStateException.class, ()-> iterator.set("bad"));
+    }
+
+    @Test
+    void getIterator_whenSet_thenCorrect() {
+        CustomLinkedList<String> customLinkedList = new CustomLinkedListImpl<>();
+        customLinkedList.add("one");
+        customLinkedList.add("two");
+        customLinkedList.add("three");
+        customLinkedList.add("three");
+        customLinkedList.add("three");
+
+        ListIterator<String> iterator = customLinkedList.getIterator();
+        while (iterator.hasNext()) {
+            if (iterator.next().equals("two")) {
+                iterator.set("new word");
+                break;
+            }
+        }
+
+        assertEquals(customLinkedList.getSize(), 5);
+        customLinkedList.getIterator()
+                .forEachRemaining((str) -> assertNotEquals(str, "two"));
+
+    }
+
+    @Test
+    void getIterator_whenSet2_thenCorrect() {
+        CustomLinkedList<String> customLinkedList = new CustomLinkedListImpl<>();
+        customLinkedList.add("one");
+        customLinkedList.add("two");
+        customLinkedList.add("three");
+        customLinkedList.add("four");
+
+        ListIterator<String> iterator = customLinkedList.getIterator();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.previous();
+        iterator.previous();    //three
+        iterator.set("new word");
+
+        assertEquals(customLinkedList.getSize(), 4);
+        customLinkedList.getIterator()
+                .forEachRemaining((str) -> assertNotEquals(str, "three"));
+
+    }
+
+    @Test
+    void getIterator_whenSet3_thenCorrect() {
+        CustomLinkedList<String> customLinkedList = new CustomLinkedListImpl<>();
+        customLinkedList.add("one");
+        customLinkedList.add("two");
+        customLinkedList.add("three");
+        customLinkedList.add("four");
+
+        ListIterator<String> iterator = customLinkedList.getIterator();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+
+        while (iterator.hasPrevious()) {
+            iterator.previous();
+        }
+        iterator.set("new word");
+
+        assertEquals(customLinkedList.getSize(), 4);
+        customLinkedList.getIterator()
+                .forEachRemaining((str) -> assertNotEquals(str, "one"));
+
+    }
+
 }
