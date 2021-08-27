@@ -118,7 +118,9 @@ public class CustomLinkedListImpl <E> implements CustomLinkedList<E> {
 
         @Override
         public void remove() {
-            //unlink(current);
+            if(!hasModified) throw new IllegalStateException();
+            unlink(prevNode);
+            hasModified = false;
         }
 
         @Override
