@@ -1,3 +1,8 @@
+#HomeWork:
+1) Читаєм про анотації та рефлексію
+2) Реалізовуєм свій Object/JSON mapper
+3) Реалізовуєм стек та чергу.
+
 # notes
 Имя	Разрядность	Диапазон
 long	64	        -9, 223, 372, 036, 854, 775, 808.. 9, 223, 372, 036, 854, 775, 807
@@ -18,8 +23,9 @@ byte -> int -> long
    https://mapstruct.org/
    https://www.baeldung.com/jackson-object-mapper-tutorial
 3) Exception
-
-#HomeWork:
-1) Читаєм про анотації та рефлексію
-2) Реалізовуєм свій Object/JSON mapper
-3) Реалізовуєм стек та чергу.
+4) String pool о;
+5) Integer pool;
+6) (String...params) или (String param, string[] params) (какой метод будет иметь выше приоритет при перегрузке метода)
+7) (Integer i) или (Double i) (какой метод будет иметь выше приоритет при перегрузке метода)
+8) (int i) или (double i) (какой метод будет иметь выше приоритет при перегрузке метода)
+9) Массив это объект??
