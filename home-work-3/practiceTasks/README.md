@@ -1,0 +1,25 @@
+# notes
+Имя	Разрядность	Диапазон
+long	64	        -9, 223, 372, 036, 854, 775, 808.. 9, 223, 372, 036, 854, 775, 807
+Int	32	        -2, 147, 483, 648.. 2, 147, 483, 647
+Short	16	        -32, 768.. 32, 767
+byte	8	       -128.. 127   2^8 = 256
+double	64	        1. 7е-308.. 1. 7е+ 308
+float	32	        3. 4е-038.. 3. 4е+ 038   
+char    16              				2^16  = 65 536
+boolean 8 (в массивах),
+32 (не в массивах используется int)
+
+byte -> int -> long
+
+1) Generic приклади
+2) Moddel Mapper
+   http://modelmapper.org/
+   https://mapstruct.org/
+   https://www.baeldung.com/jackson-object-mapper-tutorial
+3) Exception
+
+#HomeWork:
+1) Читаєм про анотації та рефлексію
+2) Реалізовуєм свій Object/JSON mapper
+3) Реалізовуєм стек та чергу.
