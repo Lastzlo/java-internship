@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import task1_ObjectMapper.dto.UserDTO;
 import task1_ObjectMapper.pojo.User;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ObjectMapperTest {
@@ -25,13 +27,38 @@ class ObjectMapperTest {
     }
 
     @Test
-    void map() {
+    void whenMap_thenCorrect() {
+        UserTest userTest = new UserTest(12, "NIck", "url");
 
-        UserDTO expectedDto = UserDTO.fromUser(USER);
-        UserDTO actualDto = ObjectMapper.map(USER, UserDTO.class);
+        Optional<UserDTO> optionalUserDTO = ObjectMapper.map(userTest, UserDTO.class);
+        Assertions.assertTrue(optionalUserDTO.isPresent());
 
-        System.out.println(expectedDto);
-        Assertions.assertEquals(expectedDto, actualDto);
+        UserDTO actualDto = optionalUserDTO.get();
+        Assertions.assertEquals(
+                "UserDTO{id=12, nick='NIck', pictureUrl='url'}", actualDto);
 
+    }
+
+
+    @Test
+    void whenMap_butInputClassHaveNotDtoField_thenOptionalEmpty() {
+        Optional<UserDTO> optionalUserDTO = ObjectMapper.map(USER, UserDTO.class);
+        Assertions.assertTrue(optionalUserDTO.isEmpty());
+    }
+}
+
+class UserTest {
+
+    private long id;
+    private String nick;
+    private String pictureUrl;
+
+    public UserTest() {
+    }
+
+    public UserTest(long id, String nick, String pictureUrl) {
+        this.id = id;
+        this.nick = nick;
+        this.pictureUrl = pictureUrl;
     }
 }
