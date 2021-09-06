@@ -9,83 +9,75 @@ import java.util.Optional;
 
 public class ObjectMapper {
 
-    public static <T> Optional<T> map(Object importObject, Class<T> expectedType) {
-        Constructor ctor;
+    public static <T> Optional<T> map(Object inputObj, Class<T> exportClass) {
+
+        Constructor<?> ctor;
         try {
-            ctor = getEmptyConstructor(expectedType.getConstructors());
+            ctor = getEmptyConstructor(exportClass.getConstructors());
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
             return Optional.empty();
         }
 
-        T export;
+
+        T exportInst;
         try {
-            export = (T)ctor.newInstance();
+            exportInst = (T) ctor.newInstance();
         } catch (InstantiationException | InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
             return Optional.empty();
         }
 
+        Map<String, Object> inputNameFieldsAndValues = getInputFieldsValues(inputObj);
 
-        Class<?> importClass = importObject.getClass();
-        Field[] fromFields = importClass.getDeclaredFields();
 
-        Map<String, String> fromFieldsNames = getFromFieldsNewNames(fromFields);
-
-        Field[] expFields = expectedType.getDeclaredFields();
-
+        Field[] expFields = exportClass.getDeclaredFields();
         for(Field f : expFields) {
-            f.setAccessible(true);
 
             String expFieldName = f.getName();
-            if (! fromFieldsNames.containsKey(expFieldName)) {
+            if (! inputNameFieldsAndValues.containsKey(expFieldName)) {
                 try {
-                    throw new NoSuchFieldException("Import class don't declare field with name: " + expFieldName);
+                    throw new NoSuchFieldException(
+                            "Input class don't declare field with name: " + expFieldName);
                 } catch (NoSuchFieldException e) {
                     e.printStackTrace();
                     return Optional.empty();
                 }
-
-                //continue;
             }
 
-
-            String importFieldName = fromFieldsNames.get(expFieldName);
-            Field declaredField;
             try {
-                declaredField = importClass.getDeclaredField(importFieldName);
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-                return Optional.empty();
-            }
-            declaredField.setAccessible(true);
-
-            try {
-                f.set(export, declaredField.get(importObject));
+                f.setAccessible(true);
+                f.set(exportInst, inputNameFieldsAndValues.get(expFieldName));
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
                 return Optional.empty();
             }
         }
 
-        return Optional.of(export);
+        return Optional.of(exportInst);
     }
 
-    private static Constructor getEmptyConstructor(Constructor<?>[] allConstructors) throws NoSuchFieldException {
-        for(Constructor ctor : allConstructors) {
+    private static Map<String, Object> getInputFieldsValues(Object inputObj) {
+        Map<String, Object> resultMap = new HashMap<>();
+        Field[] declaredFields = inputObj.getClass().getDeclaredFields();
+
+        for(Field f : declaredFields) {
+            try {
+                f.setAccessible(true);
+                resultMap.put(f.getName(), f.get(inputObj));
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        return resultMap;
+    }
+
+    private static Constructor<?> getEmptyConstructor(Constructor<?>[] allConstructors) throws NoSuchFieldException {
+        for(Constructor<?> ctor : allConstructors) {
             if (ctor.getParameterTypes().length == 0) return ctor;
         }
-        throw new NoSuchFieldException("Export class has not EMPTY CONCTRUCTOR");
+        throw new NoSuchFieldException("Export class has not EMPTY CONSTRUCTOR");
     }
-
-    private static Map<String, String> getFromFieldsNewNames(Field[] fromFields) {
-        Map<String, String> oldName_newNameMap = new HashMap<>();
-        for(Field f : fromFields) {
-            oldName_newNameMap.put(f.getName(), f.getName());
-        }
-        return  oldName_newNameMap;
-    }
-
 
 
 }
