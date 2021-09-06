@@ -62,8 +62,18 @@ public class ObjectMapper {
         Field[] declaredFields = inputObj.getClass().getDeclaredFields();
 
         for(Field f : declaredFields) {
+
             try {
                 f.setAccessible(true);
+
+                if(f.isAnnotationPresent(NewName.class)) {
+                    NewName newName = f.getAnnotation(NewName.class);
+                    resultMap.put(newName.name(), f.get(inputObj));
+                    continue;
+                }
+
+                if (f.isAnnotationPresent(Ignore.class)) continue;
+
                 resultMap.put(f.getName(), f.get(inputObj));
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
