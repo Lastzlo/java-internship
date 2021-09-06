@@ -38,6 +38,28 @@ class ObjectMapperTest {
 
     }
 
+    @Test
+    void whenMap_butInputClassWithAnnotation_thenCorrect() {
+        UserWithAnnotation user = new UserWithAnnotation(12, "NIck", "url");
+        UserDTO expectedUserDTO = new UserDTO(12, "NIck", "url");
+
+        Optional<UserDTO> optionalUserDTO = ObjectMapper.map(user, UserDTO.class);
+        Assertions.assertTrue(optionalUserDTO.isPresent());
+
+        UserDTO actualDto = optionalUserDTO.get();
+        Assertions.assertEquals(expectedUserDTO, actualDto);
+
+    }
+
+    @Test
+    void whenMap_butInputClassHasSameFieldAndAnnotatedField_thenOptionalEmpty() {
+        UserWithAnnotation2 user = new UserWithAnnotation2(12, "Full_NAme", "NIck", "url");
+
+        Optional<UserDTO> optionalUserDTO = ObjectMapper.map(user, UserDTO.class);
+        Assertions.assertTrue(optionalUserDTO.isEmpty());
+
+    }
+
 
     @Test
     void whenMap_butInputClassHaveNotDtoField_thenOptionalEmpty() {
@@ -47,8 +69,8 @@ class ObjectMapperTest {
 
     @Test
     void whenMap_butDtoWithoutEmptyConstructor_thenOptionalEmpty() {
-        Optional<DtoWithoutEmptyConstructor> optionalUserDTO =
-                ObjectMapper.map(USER, DtoWithoutEmptyConstructor.class);
+        Optional<UserDtoWithoutEmptyConstructor> optionalUserDTO =
+                ObjectMapper.map(USER, UserDtoWithoutEmptyConstructor.class);
         Assertions.assertTrue(optionalUserDTO.isEmpty());
     }
 
@@ -70,13 +92,13 @@ class UserTest {
     }
 }
 
-class DtoWithoutEmptyConstructor {
+class UserDtoWithoutEmptyConstructor {
 
     private long id;
     private String nick;
     private String pictureUrl;
 
-    public DtoWithoutEmptyConstructor(long id, String nick, String pictureUrl) {
+    public UserDtoWithoutEmptyConstructor(long id, String nick, String pictureUrl) {
         this.id = id;
         this.nick = nick;
         this.pictureUrl = pictureUrl;
@@ -86,7 +108,8 @@ class DtoWithoutEmptyConstructor {
 class UserWithAnnotation {
 
     private long id;
-    private String nick;
+    @NewName(name = "nick")
+    private String nickkk;
 
     @NewName(name = "pictureUrl")
     private String picture;
@@ -99,7 +122,29 @@ class UserWithAnnotation {
 
     public UserWithAnnotation(long id, String nick, String pictureUrl) {
         this.id = id;
-        this.nick = nick;
+        this.nickkk = nick;
         this.picture = pictureUrl;
+    }
+}
+
+class UserWithAnnotation2 {
+
+    private long id;
+    @NewName(name = "nick")
+    private String fullName;
+
+    private String nick;
+
+    @NewName(name = "pictureUrl")
+    private String pictureUrl;
+
+    public UserWithAnnotation2() {
+    }
+
+    public UserWithAnnotation2(long id, String fullName, String nick, String pictureUrl) {
+        this.id = id;
+        this.fullName = fullName;
+        this.nick = nick;
+        this.pictureUrl = pictureUrl;
     }
 }
