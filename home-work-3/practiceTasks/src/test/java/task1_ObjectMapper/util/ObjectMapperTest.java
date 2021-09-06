@@ -5,10 +5,8 @@ import org.junit.jupiter.api.Test;
 import task1_ObjectMapper.dto.UserDTO;
 import task1_ObjectMapper.pojo.User;
 
-import java.util.Objects;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 class ObjectMapperTest {
 
@@ -46,6 +44,14 @@ class ObjectMapperTest {
         Optional<UserDTO> optionalUserDTO = ObjectMapper.map(USER, UserDTO.class);
         Assertions.assertTrue(optionalUserDTO.isEmpty());
     }
+
+    @Test
+    void whenMap_butDtoWithoutEmptyConstructor_thenOptionalEmpty() {
+        Optional<DtoWithoutEmptyConstructor> optionalUserDTO =
+                ObjectMapper.map(USER, DtoWithoutEmptyConstructor.class);
+        Assertions.assertTrue(optionalUserDTO.isEmpty());
+    }
+
 }
 
 class UserTest {
@@ -61,5 +67,39 @@ class UserTest {
         this.id = id;
         this.nick = nick;
         this.pictureUrl = pictureUrl;
+    }
+}
+
+class DtoWithoutEmptyConstructor {
+
+    private long id;
+    private String nick;
+    private String pictureUrl;
+
+    public DtoWithoutEmptyConstructor(long id, String nick, String pictureUrl) {
+        this.id = id;
+        this.nick = nick;
+        this.pictureUrl = pictureUrl;
+    }
+}
+
+class UserWithAnnotation {
+
+    private long id;
+    private String nick;
+
+    @NewName(name = "pictureUrl")
+    private String picture;
+
+    @Ignore
+    private String someInfo;
+
+    public UserWithAnnotation() {
+    }
+
+    public UserWithAnnotation(long id, String nick, String pictureUrl) {
+        this.id = id;
+        this.nick = nick;
+        this.picture = pictureUrl;
     }
 }
