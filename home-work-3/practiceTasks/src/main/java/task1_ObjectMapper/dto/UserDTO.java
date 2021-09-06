@@ -1,6 +1,6 @@
-package task1_ObjectMappper.dto;
+package task1_ObjectMapper.dto;
 
-import task1_ObjectMappper.pojo.User;
+import task1_ObjectMapper.pojo.User;
 
 import java.util.Objects;
 

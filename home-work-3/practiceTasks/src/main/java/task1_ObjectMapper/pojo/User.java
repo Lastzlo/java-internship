@@ -1,4 +1,4 @@
-package task1_ObjectMappper.pojo;
+package task1_ObjectMapper.pojo;
 
 import java.util.Objects;
 

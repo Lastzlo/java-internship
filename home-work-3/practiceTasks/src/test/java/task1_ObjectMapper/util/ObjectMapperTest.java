@@ -1,9 +1,9 @@
-package task1_ObjectMappper.util;
+package task1_ObjectMapper.util;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import task1_ObjectMappper.dto.UserDTO;
-import task1_ObjectMappper.pojo.User;
+import task1_ObjectMapper.dto.UserDTO;
+import task1_ObjectMapper.pojo.User;
 
 import static org.junit.jupiter.api.Assertions.*;
 
