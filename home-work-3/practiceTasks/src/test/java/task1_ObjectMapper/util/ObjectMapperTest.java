@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import task1_ObjectMapper.dto.UserDTO;
 import task1_ObjectMapper.pojo.User;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,13 +30,13 @@ class ObjectMapperTest {
     @Test
     void whenMap_thenCorrect() {
         UserTest userTest = new UserTest(12, "NIck", "url");
+        UserDTO expectedUserDTO = new UserDTO(12, "NIck", "url");
 
         Optional<UserDTO> optionalUserDTO = ObjectMapper.map(userTest, UserDTO.class);
         Assertions.assertTrue(optionalUserDTO.isPresent());
 
         UserDTO actualDto = optionalUserDTO.get();
-        Assertions.assertEquals(
-                "UserDTO{id=12, nick='NIck', pictureUrl='url'}", actualDto);
+        Assertions.assertEquals(expectedUserDTO, actualDto);
 
     }
 
