@@ -2,7 +2,6 @@ package task_3Queue;
 
 import java.util.Arrays;
 import java.util.NoSuchElementException;
-import java.util.Queue;
 
 public class CustomQueueImpl<E> implements CustomQueue<E>{
 
