@@ -2,7 +2,9 @@ package task1_ObjectMapper.util;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import task1_ObjectMapper.dto.CarDTO;
 import task1_ObjectMapper.dto.UserDTO;
+import task1_ObjectMapper.pojo.Car;
 import task1_ObjectMapper.pojo.User;
 
 import java.util.Optional;
@@ -35,6 +37,29 @@ class ObjectMapperTest {
 
         UserDTO actualDto = optionalUserDTO.get();
         Assertions.assertEquals(expectedUserDTO, actualDto);
+
+    }
+
+    @Test
+    void whenMap_thenCorrect2() {
+        Car car = new Car(
+                new User(12, "url", "Jony", "jony123", "desc", "location", 123, 254),
+                "BMW M3",
+                61287,
+                7.2d,
+                "Wow"
+        );
+        CarDTO expected = new CarDTO(
+                new User(12, "url", "Jony", "jony123", "desc", "location", 123, 254),
+                "BMW M3",
+                61287);
+
+
+        Optional<CarDTO> optionalCarDTO = ObjectMapper.map(car, CarDTO.class);
+        Assertions.assertTrue(optionalCarDTO.isPresent());
+
+        CarDTO actualDto = optionalCarDTO.get();
+        Assertions.assertEquals(expected, actualDto);
 
     }
 
