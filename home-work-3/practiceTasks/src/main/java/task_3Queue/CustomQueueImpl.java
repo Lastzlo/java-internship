@@ -9,12 +9,6 @@ public class CustomQueueImpl<E> implements CustomQueue<E>{
     private int count = 0;
 
     @Override
-    public E element() {
-        if (data.length == 0) throw new NoSuchElementException();
-        return (E)data[0];
-    }
-
-    @Override
     public boolean offer(E e) {
         if(count == data.length) {
             data = Arrays.copyOf(data, count + 1);
@@ -26,22 +20,34 @@ public class CustomQueueImpl<E> implements CustomQueue<E>{
 
     @Override
     public E peek() {
-        return (data.length == 0) ? null : (E)data[0];
+        return isEmpty() ? null : (E)data[0];
     }
 
     @Override
     public E poll() {
-        E value = peek();
+        if(isEmpty()) return null;
+        E value = (E)data[0];
         count--;
-        data = Arrays.copyOfRange(data, 1, data.length - 1);
+        data = Arrays.copyOfRange(data, 1, data.length);
         return value;
     }
 
     @Override
+    public E element() {
+        if (data.length == 0) throw new NoSuchElementException();
+        return (E)data[0];
+    }
+
+    @Override
     public E remove() {
-        E value = element();
+        if (data.length == 0) throw new NoSuchElementException();
+        E value = (E)data[0];
         count--;
-        data = Arrays.copyOfRange(data, 1, data.length - 1);
+        data = Arrays.copyOfRange(data, 1, data.length);
         return value;
+    }
+
+    public boolean isEmpty() {
+        return (count == 0);
     }
 }
