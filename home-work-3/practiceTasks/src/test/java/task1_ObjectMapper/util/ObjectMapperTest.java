@@ -32,12 +32,8 @@ class ObjectMapperTest {
         UserTest userTest = new UserTest(12, "NIck", "url");
         UserDTO expectedUserDTO = new UserDTO(12, "NIck", "url");
 
-        Optional<UserDTO> optionalUserDTO = ObjectMapper.map(userTest, UserDTO.class);
-        Assertions.assertTrue(optionalUserDTO.isPresent());
-
-        UserDTO actualDto = optionalUserDTO.get();
+        UserDTO actualDto = ObjectMapper.map(userTest, UserDTO.class);
         Assertions.assertEquals(expectedUserDTO, actualDto);
-
     }
 
     @Test
@@ -55,12 +51,8 @@ class ObjectMapperTest {
                 61287);
 
 
-        Optional<CarDTO> optionalCarDTO = ObjectMapper.map(car, CarDTO.class);
-        Assertions.assertTrue(optionalCarDTO.isPresent());
-
-        CarDTO actualDto = optionalCarDTO.get();
+        CarDTO actualDto = ObjectMapper.map(car, CarDTO.class);
         Assertions.assertEquals(expected, actualDto);
-
     }
 
     @Test
@@ -68,35 +60,37 @@ class ObjectMapperTest {
         UserWithAnnotation user = new UserWithAnnotation(12, "NIck", "url");
         UserDTO expectedUserDTO = new UserDTO(12, "NIck", "url");
 
-        Optional<UserDTO> optionalUserDTO = ObjectMapper.map(user, UserDTO.class);
-        Assertions.assertTrue(optionalUserDTO.isPresent());
-
-        UserDTO actualDto = optionalUserDTO.get();
+        UserDTO actualDto = ObjectMapper.map(user, UserDTO.class);
         Assertions.assertEquals(expectedUserDTO, actualDto);
-
     }
 
     @Test
-    void whenMap_butInputClassHasSameFieldAndAnnotatedField_thenOptionalEmpty() {
+    void whenMap_butInputClassHasSameFieldAndAnnotatedField_thenRuntimeException() {
         UserWithAnnotation2 user = new UserWithAnnotation2(12, "Full_NAme", "NIck", "url");
+        String expMessage = "java.security.InvalidKeyException: Input class has two fields with same name: nick";
 
-        Optional<UserDTO> optionalUserDTO = ObjectMapper.map(user, UserDTO.class);
-        Assertions.assertTrue(optionalUserDTO.isEmpty());
-
+        RuntimeException exception = Assertions.assertThrows(RuntimeException.class,
+                () -> ObjectMapper.map(user, UserDTO.class));
+        Assertions.assertEquals(expMessage,exception.getMessage());
     }
 
 
     @Test
-    void whenMap_butInputClassHaveNotDtoField_thenOptionalEmpty() {
-        Optional<UserDTO> optionalUserDTO = ObjectMapper.map(USER, UserDTO.class);
-        Assertions.assertTrue(optionalUserDTO.isEmpty());
+    void whenMap_butInputClassHaveNotDtoField_thenRuntimeException() {
+        String expMessage = "java.lang.NoSuchFieldException: Input class don't declare field with name: pictureUrl";
+
+        RuntimeException exception = Assertions.assertThrows(RuntimeException.class,
+                () -> ObjectMapper.map(USER, UserDTO.class));
+        Assertions.assertEquals(expMessage,exception.getMessage());
     }
 
     @Test
-    void whenMap_butDtoWithoutEmptyConstructor_thenOptionalEmpty() {
-        Optional<UserDtoWithoutEmptyConstructor> optionalUserDTO =
-                ObjectMapper.map(USER, UserDtoWithoutEmptyConstructor.class);
-        Assertions.assertTrue(optionalUserDTO.isEmpty());
+    void whenMap_butDtoWithoutEmptyConstructor_thenRuntimeException() {
+        String expMessage = "java.lang.NoSuchMethodException: Export class has not empty constructor";
+
+        RuntimeException exception = Assertions.assertThrows(RuntimeException.class,
+                () -> ObjectMapper.map(USER, UserDtoWithoutEmptyConstructor.class));
+        Assertions.assertEquals(expMessage,exception.getMessage());
     }
 
 }
