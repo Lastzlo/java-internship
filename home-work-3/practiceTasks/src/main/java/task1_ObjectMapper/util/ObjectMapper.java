@@ -3,82 +3,105 @@ package task1_ObjectMapper.util;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.security.InvalidKeyException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public class ObjectMapper {
 
-    public static <T> Optional<T> map(Object inputObj, Class<T> exportClass) {
-        T exportInst;
-        try {
-            Constructor<?> ctor = getEmptyConstructor(exportClass.getConstructors());
+    public static <T> T map(Object inputObj, Class<T> expClass) {
+        T expInstance = getInstance(expClass);
 
-            try {
-                exportInst = (T) ctor.newInstance();
-            } catch (InstantiationException | InvocationTargetException e) {
-                e.printStackTrace();
-                return Optional.empty();
-            }
+        Map<String, Object> mapNamesAndFields = getMapFieldsNameAndValues(inputObj);
 
-            Map<String, Object> inputNameFieldsAndValues =
-                    getInputFieldsValues(inputObj);
+        Field[] expClassFields = expClass.getDeclaredFields();
+        for(Field expField : expClassFields) {
+            String expFieldName = expField.getName();
 
-            Field[] expFields = exportClass.getDeclaredFields();
-            for(Field f : expFields) {
-
-                String expFieldName = f.getName();
-                if (! inputNameFieldsAndValues.containsKey(expFieldName)) {
+            if (! mapNamesAndFields.containsKey(expFieldName)) {
+                try {
                     throw new NoSuchFieldException(
                             "Input class don't declare field with name: " + expFieldName);
+                } catch (NoSuchFieldException e) {
+                    throw new RuntimeException(e);
                 }
-
-                f.setAccessible(true);
-                f.set(exportInst, inputNameFieldsAndValues.get(expFieldName));
             }
 
-
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-            return Optional.empty();
+            Object inputFieldValue = mapNamesAndFields.get(expFieldName);
+            try {
+                expField.setAccessible(true);
+                expField.set(expInstance, inputFieldValue);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
         }
 
-        return Optional.of(exportInst);
+        return expInstance;
     }
 
-    private static Map<String, Object> getInputFieldsValues(Object inputObj) throws NoSuchFieldException, IllegalAccessException {
-        Map<String, Object> resultMap = new HashMap<>();
+    private static <T> T getInstance(Class<T> expClass) {
+        final T expInstance;
+        try {
+            Constructor<?> emptyConstructor =
+                    getEmptyConstructor(expClass.getConstructors());
+
+            emptyConstructor.setAccessible(true);
+            expInstance = (T) emptyConstructor.newInstance();
+        } catch (InstantiationException
+                | InvocationTargetException
+                | IllegalAccessException
+                | NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+        return expInstance;
+    }
+
+    private static Constructor<?> getEmptyConstructor(Constructor<?>[] allConstructors) throws NoSuchMethodException {
+        for(Constructor<?> ctor : allConstructors) {
+            if (ctor.getParameterTypes().length == 0 ) {
+                return ctor;
+            }
+        }
+
+        throw new NoSuchMethodException("Export class has not empty constructor");
+    }
+
+    private static Map<String, Object> getMapFieldsNameAndValues(Object inputObj) {
+        Map<String, Object> map = new HashMap<>();
         Field[] declaredFields = inputObj.getClass().getDeclaredFields();
 
-        for(Field f : declaredFields) {
-
-            if (f.isAnnotationPresent(Ignore.class)) continue;
-
-            f.setAccessible(true);
-            Object o = f.get(inputObj);
-
+        for(Field field : declaredFields) {
             String fieldName;
-            if(f.isAnnotationPresent(NewName.class)) {
-                NewName newName = f.getAnnotation(NewName.class);
+
+            if (field.isAnnotationPresent(Ignore.class)) continue;
+
+            if (field.isAnnotationPresent(NewName.class)) {
+                NewName newName = field.getAnnotation(NewName.class);
                 fieldName = newName.name();
             } else {
-                fieldName = f.getName();
+                fieldName = field.getName();
             }
 
-            if(resultMap.containsKey(fieldName)) throw new NoSuchFieldException("Input class has fields with same name");
+            if(map.containsKey(fieldName)) {
+                try {
+                    throw new InvalidKeyException(
+                            "Input class has two fields with same name: " + fieldName);
+                } catch (InvalidKeyException e) {
+                    throw new RuntimeException(e);
+                }
+            }
 
-            resultMap.put(fieldName, o);
+            field.setAccessible(true);
+            try {
+                Object value = field.get(inputObj);
+                map.put(fieldName, value);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
 
         }
 
-        return resultMap;
-    }
-
-    private static Constructor<?> getEmptyConstructor(Constructor<?>[] allConstructors) throws NoSuchFieldException {
-        for(Constructor<?> ctor : allConstructors) {
-            if (ctor.getParameterTypes().length == 0) return ctor;
-        }
-        throw new NoSuchFieldException("Export class has not EMPTY CONSTRUCTOR");
+        return map;
     }
 
 
