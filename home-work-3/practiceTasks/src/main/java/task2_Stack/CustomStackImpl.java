@@ -12,7 +12,7 @@ public class CustomStackImpl <E> implements CustomStack<E> {
     }
 
     public CustomStackImpl(int initCount) {
-        if(initCount < 0) throw new IllegalArgumentException("count should be more than 0");
+        if(initCount < 0) throw new IllegalArgumentException("Init count should be more than 0");
         data = new Object[initCount];
     }
 

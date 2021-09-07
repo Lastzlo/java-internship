@@ -8,6 +8,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class CustomStackImplTest {
 
     @Test
+    void createCustomStackImpl_butInitCount_lessThan0_thenIllegalArgumentException() {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new CustomStackImpl<Integer>(-100));
+
+        String message = exception.getMessage();
+        assertEquals("Init count should be more than 0", message);
+    }
+
+
+    @Test
     void push() throws NoSuchFieldException, IllegalAccessException {
         CustomStackImpl<Integer> stack = new CustomStackImpl<>();
         
