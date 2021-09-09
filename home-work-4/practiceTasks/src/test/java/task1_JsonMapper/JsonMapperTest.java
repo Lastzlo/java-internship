@@ -49,6 +49,36 @@ class JsonMapperTest {
         assertEquals(exp, actual);
         System.out.println("actual = " + actual);
     }
+
+    @Test
+    void hasNextNode_thenTrue() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        //give
+        String line = "\"firstName\":\"Tom\"";
+        int index = 0;
+
+        //when
+        String methodName = "hasNextNode";
+        Class<JsonMapper> aClass = JsonMapper.class;
+        Method method = aClass.getDeclaredMethod(methodName, String.class, Integer.class);
+        method.setAccessible(true);
+
+        Assertions.assertTrue((Boolean) method.invoke(null, line, index));
+    }
+
+    @Test
+    void hasNextNode_thenFalse() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        //give
+        String line = "firstName\":\"Tom\"";
+        int index = 0;
+
+        //when
+        String methodName = "hasNextNode";
+        Class<JsonMapper> aClass = JsonMapper.class;
+        Method method = aClass.getDeclaredMethod(methodName, String.class, Integer.class);
+        method.setAccessible(true);
+
+        Assertions.assertFalse((Boolean) method.invoke(null, line, index));
+    }
 }
 
 //class TestClass {
