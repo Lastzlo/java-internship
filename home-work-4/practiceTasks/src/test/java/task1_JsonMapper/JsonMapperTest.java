@@ -13,11 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class JsonMapperTest {
 
 //    @Test
-//    void toJSON() {
-//    }
-
-
-//    @Test
 //    void fromJSON() {
 //        String json = "{\"firstName\":\"Tom\",\"lastName\":\"Jackson\",\"gender\":\"male\"}";
 //        TestClass expected = new TestClass("Tom", "Jackson", "male");
@@ -101,54 +96,6 @@ class JsonMapperTest {
         assertEquals("Tom", map.get("firstName"));
     }
 
-    @Test
-    void removeBraces() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        //give
-        String json = "{\"firstName\":\"Tom\"}";
-        String exp = "\"firstName\":\"Tom\"";
-
-        //when
-        String methodName = "removeBraces";
-        Class<JsonMapper> aClass = JsonMapper.class;
-        Method method = aClass.getDeclaredMethod(methodName, String.class);
-        method.setAccessible(true);
-        String actual = (String) method.invoke(null, json);
-
-        //then
-        assertEquals(json.length() - 2, actual.length());
-        assertEquals(exp, actual);
-        System.out.println("actual = " + actual);
-    }
-
-    @Test
-    void hasNextNode_thenTrue() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        //give
-        String line = "\"firstName\":\"Tom\"";
-        int index = 0;
-
-        //when
-        String methodName = "hasNextNode";
-        Class<JsonMapper> aClass = JsonMapper.class;
-        Method method = aClass.getDeclaredMethod(methodName, String.class, Integer.class);
-        method.setAccessible(true);
-
-        Assertions.assertTrue((Boolean) method.invoke(null, line, index));
-    }
-
-    @Test
-    void hasNextNode_thenFalse() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        //give
-        String line = "firstName\":\"Tom\"";
-        int index = 0;
-
-        //when
-        String methodName = "hasNextNode";
-        Class<JsonMapper> aClass = JsonMapper.class;
-        Method method = aClass.getDeclaredMethod(methodName, String.class, Integer.class);
-        method.setAccessible(true);
-
-        Assertions.assertFalse((Boolean) method.invoke(null, line, index));
-    }
 }
 
 //class TestClass {
