@@ -6,6 +6,7 @@ import java.util.Map;
 public class JsonMapper {
 
     public static Map<String, Object> fromJSON(String json) {
+        if(json.length() == 2) return new HashMap<>();
         return parseObject(json, 0);
     }
 
@@ -14,7 +15,6 @@ public class JsonMapper {
 
         Map<String, Object> map = new HashMap<>();
         while (hasNextPair(json, currCharIndex)) {
-            currCharIndex = skipComma(json, currCharIndex);
             currCharIndex = skipBrace(currCharIndex);
 
             String key = getKeyString(json, currCharIndex);
@@ -30,13 +30,18 @@ public class JsonMapper {
 
             currCharIndex = skipBrace(currCharIndex);
 
-//
-//            Object value = parseValue(valueString);
-//            map.put(key, value);
-            map.put(key, valueString);
+            currCharIndex = skipComma(json, currCharIndex);
+
+
+            Object value = parseValue(valueString);
+            map.put(key, value);
         }
 
         return map;
+    }
+
+    private static Object parseValue(String valueString) {
+        return null;
     }
 
     private static String getValueString(String s, Integer index) {
