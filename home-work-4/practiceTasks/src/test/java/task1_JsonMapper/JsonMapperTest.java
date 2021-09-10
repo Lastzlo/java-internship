@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Map;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,6 +31,75 @@ class JsonMapperTest {
 //    void jsonToMapKeyValue() {
 //
 //    }
+
+    @Test
+    void String_indexOf() {
+        String line = "\"firstName\":\"Tom\"";
+
+        char[] chars = line.toCharArray();
+        int index1 = line.indexOf('\"');
+        int index2 = line.indexOf('\"', 1);
+
+        assertEquals(0, index1);
+        String key = line.substring(1, line.indexOf('\"',1));
+        assertEquals(10, index2);
+        assertEquals("firstName", key);
+
+    }
+
+    @Test
+    void hasNextPair() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        //give
+        int currCharIndex = 1;
+        String json = "{\"firstName\":\"Tom\"}";
+
+        //when
+        String methodName = "hasNextPair";
+        Class<JsonMapper> aClass = JsonMapper.class;
+        Method method = aClass.getDeclaredMethod(methodName, String.class, Integer.class);
+        method.setAccessible(true);
+        Boolean hasNextPair = (Boolean) method.invoke(null, json, currCharIndex);
+
+        //then
+        System.out.println("hasNextPair = " + hasNextPair);
+        assertTrue(hasNextPair);
+    }
+
+    @Test
+    void getKeyString() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        //give
+        int currCharIndex = 2;
+        String json = "{\"firstName\":\"Tom\"}";
+
+        //when
+        String methodName = "getKeyString";
+        Class<JsonMapper> aClass = JsonMapper.class;
+        Method method = aClass.getDeclaredMethod(methodName, String.class, Integer.class);
+        method.setAccessible(true);
+        String key = (String) method.invoke(null, json, currCharIndex);
+
+        //then
+        System.out.println("key = " + key);
+        assertEquals("firstName", key);
+    }
+
+    @Test
+    void parseObject() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        //give
+        int currCharIndex = 0;
+        String json = "{\"firstName\":\"Tom\"}";
+
+        //when
+        String methodName = "parseObject";
+        Class<JsonMapper> aClass = JsonMapper.class;
+        Method method = aClass.getDeclaredMethod(methodName, String.class, Integer.class);
+        method.setAccessible(true);
+        Map<String, Object> map = (Map<String, Object>) method.invoke(null, json, currCharIndex);
+
+        //then
+        assertEquals(1, map.size());
+        assertEquals("Tom", map.get("firstName"));
+    }
 
     @Test
     void removeBraces() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
