@@ -81,7 +81,7 @@ class JsonMapperTest {
     void parseObject() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         //give
         int currCharIndex = 0;
-        String json = "{\"firstName\":\"Tom\"}";
+        String json = "{\"firstName\":\"Tom\",\"lastName\":\"Jones\"}";
 
         //when
         String methodName = "parseObject";
@@ -91,8 +91,9 @@ class JsonMapperTest {
         Map<String, Object> map = (Map<String, Object>) method.invoke(null, json, currCharIndex);
 
         //then
-        assertEquals(1, map.size());
+        assertEquals(2, map.size());
         assertEquals("Tom", map.get("firstName"));
+        assertEquals("Jones", map.get("lastName"));
     }
 
 }
