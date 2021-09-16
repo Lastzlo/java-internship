@@ -33,7 +33,7 @@ class ContactNumberValidatorTest {
     }
 
     @Test
-    public void givenUnCorrectNumber_thenValidationSuccess() {
+    public void givenUnCorrectNumber_thenValidationFails() {
         User user = new User("09712");
 
         Set<ConstraintViolation<User>> violations = validator.validate(user);
