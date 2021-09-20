@@ -1,15 +1,15 @@
-#HomeWork:
+#HomeWork 5 (завдання на 13 вересня):
 Question - answer - collection API
 
 ДР
-1) Порахувати кількість обєктів та масивів в JSON
+1) Порахувати кількість об'єктів та масивів в JSON
 2) (Optional) Перевірити чи JSON валідний
 3) Написати механізм валідації для Обєкту по анотаціям. @NotNull, .......
 https://www.baeldung.com/javax-validation
-Завдання по SQL
-Questions
-Яка структура даних в онснові PriorityQueue?
-Binary Heap
+4) Завдання по SQL (є книжка з завданнями та запусили БД до якої можна писати запити)
+5) Questions:
+   - Яка структура даних в онснові PriorityQueue?
+   - Binary Heap
 
 Бємся на команди.
 Кожна команда розгядає кейси

@@ -15,7 +15,7 @@
 5) Розбираєм ітератор
 6) Дивимся на виконання ДР
 
-#ДЗ:
+#HomeWork 2 (завдання на 6 вересня):
 1) Реалізувати Single tone.
 2) https://stackoverflow.com/questions/39533902/java-singleton-usage-with-multiple-class-loaders
 3) Згадуєм Boxing, UnBoxing, Приведення типів, Типи в Java
