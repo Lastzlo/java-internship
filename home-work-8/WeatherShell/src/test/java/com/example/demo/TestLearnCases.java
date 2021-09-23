@@ -78,8 +78,7 @@ public class TestLearnCases {
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-        assertThat(response.statusCode(), equalTo(HttpStatus.OK));
-
+        Assertions.assertEquals(200, response.statusCode());
 
         // print status code
         System.out.println(response.statusCode());
