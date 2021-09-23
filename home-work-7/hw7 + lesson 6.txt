@@ -1,0 +1,53 @@
+#HomeWork 7 (завдання на 20 вересня):
+0) довиконати все що не закінчено
+можна спитати про мехінзм валідаціїї реалізіція від Романа
+1) Дивимся уроки про Spring.
+https://www.youtube.com/playlist?list=PL6jg6AGdCNaWF-sUH2QDudBRXo54zuN1t
+2) Робимо app за допомогою Spring Initializr
+https://start.spring.io/
+
+#Lesson 6 (16 вересня):
+1) були питання
+
+	@RequestParam
+
+	Solid
+
+	Http методи
+
+	@Autowired
+
+	Що таке Qualifier?
+
+	Що таке @Component?
+
+	Яка різниця між @Component та @Service?
+
+	З яких частин складається Heap?
+
+	Для чого Having в SQL?
+	https://oracleplsql.ru/having-mysql.html
+
+	Що таке функція агрегатор в SQL? Наведіть приклад
+
+	иерархия типов java	
+
+	Чому метод clone є ptotected?
+	https://stackoverflow.com/questions/1138769/why-is-the-clone-method-protected-in-java-lang-object
+
+	Які слої є в 3-х слойні архітектурі?
+	Presentation loyer, businnes, data
+	https://uk.wikipedia.org/wiki/%D0%A2%D1%80%D0%B8%D1%8F%D1%80%D1%83%D1%81%D0%BD%D0%B0_%D0%B0%D1%80%D1%85%D1%96%D1%82%D0%B5%D0%BA%D1%82%D1%83%D1%80%D0%B0
+
+	https://stackoverflow.com/questions/1138769/why-is-the-clone-method-protected-in-java-lang-object
+	https://uk.wikipedia.org/wiki/%D0%A2%D1%80%D0%B8%D1%8F%D1%80%D1%83%D1%81%D0%BD%D0%B0_%D0%B0%D1%80%D1%85%D1%96%D1%82%D0%B5%D0%BA%D1%82%D1%83%D1%80%D0%B0
+
+
+	Доробить те що не по доробляли
+
+	колекции на листочке
+
+	Иок контейнер
+
+2) дивились як чат Олега спрявляється з навантаженням
+3) була пропрозиціяподати резюме на проект

@@ -1,0 +1,19 @@
+#HomeWork 6 (завдання на 16 вересня):
+Користуючись механізмом валідації провалідувати клас
+https://www.baeldung.com/javax-validation
+Реалізувати чат використовуючи TCP з'єднання
+
+#Lesson 5 (13 вересня):
+1) Кодування Byte - String
+був приклад з UTF8 UTF16
+
+2) OSI модель
+https://uk.wikipedia.org/wiki/%D0%9C%D0%B5%D1%80%D0%B5%D0%B6%D0%B5%D0%B2%D0%B0_%D0%BC%D0%BE%D0%B4%D0%B5%D0%BB%D1%8C_OSI
+
+3) Wireshark
+4) Слухаєм сокет
+5) Maven
+що таке мавен
+5) Обговорюєм SQL
+треба робити вправи по SQL, повторювати SQL
+
