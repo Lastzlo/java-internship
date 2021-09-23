@@ -1,4 +1,4 @@
-#HomeWork:
+#HomeWork 4 (завдання на 9 вересня):
 0) Подумати над зворотнім зв'язком.
 1) Реалізовуємо стек та чергу в основі використати Array чи Links
    https://www.geeksforgeeks.org/array-implementation-of-queue-simple/
