@@ -47,7 +47,7 @@ public class WeatherCommands {
         return builder.toString();
     }
 
-    @ShellMethod(value = "Location information, and a 5 day forecast", key = {"weather", "get"})
+    @ShellMethod(value = "Return forecast for current location", key = {"weather", "get"})
     @ShellMethodAvailability("getWeatherAvailabilityCheck")
     public String getWeather() {
         Location location = weatherService.getCurrLocation();
