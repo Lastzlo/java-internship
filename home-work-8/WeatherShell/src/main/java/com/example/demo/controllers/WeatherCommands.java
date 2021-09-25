@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.controllers;
 
 import com.example.demo.dto.Location;
 import com.example.demo.dto.WeatherOnDay;
