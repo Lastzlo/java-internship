@@ -1,23 +1,22 @@
-package com.example.demo;
+package com.example.demo.controllers;
 
-import com.example.demo.dto.FiveDayForecast;
-import com.example.demo.dto.Location;
-import com.example.demo.dto.WeatherOnDay;
+import com.example.demo.controllers.WeatherCommands;
+import com.example.demo.models.Forecast;
+import com.example.demo.models.Location;
+import com.example.demo.models.WeatherOnDay;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class WeatherCommandsTest {
 
     static WeatherOnDay[] weatherOnDays;
+    static Forecast forecast;
     static Location location;
 
     @BeforeAll
@@ -128,9 +127,9 @@ class WeatherCommandsTest {
                 "  \"timezone\": \"Europe/London\"\n" +
                 "}";
 
-        FiveDayForecast forecast = mapper
-                .readValue(body, FiveDayForecast.class);
-        weatherOnDays = forecast.getConsolidated_weather();
+        forecast = mapper
+                .readValue(body, Forecast.class);
+        weatherOnDays = forecast.getConsolidatedWeather();
 
         body = "[{\"title\":\"London\",\"location_type\":\"City\",\"woeid\":44418,\"latt_long\":\"51.506321,-0.12714\"}]";
 
@@ -143,7 +142,7 @@ class WeatherCommandsTest {
     @Test
     void formatGetWeatherRequest() {
         WeatherCommands commands = new WeatherCommands(null);
-        String actual = commands.formatGetWeatherRequest(location, weatherOnDays);
+        String actual = commands.formatGetWeatherRequest(location, forecast);
         System.out.println(actual);
 
         Assertions.assertEquals(182, actual.length());

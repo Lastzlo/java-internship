@@ -1,6 +1,6 @@
-package com.example.demo;
+package com.example.demo.repositories;
 
-import com.example.demo.dto.Location;
+import com.example.demo.models.Location;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;

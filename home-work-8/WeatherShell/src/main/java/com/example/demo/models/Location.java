@@ -1,6 +1,4 @@
-package com.example.demo.dto;
-
-import java.io.Serializable;
+package com.example.demo.models;
 
 public class Location {
     private String title;

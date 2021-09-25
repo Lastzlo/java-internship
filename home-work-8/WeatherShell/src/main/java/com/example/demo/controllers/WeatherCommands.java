@@ -1,7 +1,9 @@
 package com.example.demo.controllers;
 
-import com.example.demo.dto.Location;
-import com.example.demo.dto.WeatherOnDay;
+import com.example.demo.models.Forecast;
+import com.example.demo.services.WeatherService;
+import com.example.demo.models.Location;
+import com.example.demo.models.WeatherOnDay;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
@@ -49,19 +51,18 @@ public class WeatherCommands {
     @ShellMethodAvailability("getWeatherAvailabilityCheck")
     public String getWeather() {
         Location location = weatherService.getCurrLocation();
-        WeatherOnDay[] weatherOnDays = weatherService.getWeatherOnCurrLocation();
-
-        return formatGetWeatherRequest(location, weatherOnDays);
+        Forecast forecast = weatherService.getForecastOnCurrLocation();
+        return formatGetWeatherRequest(location, forecast);
     }
 
-    String formatGetWeatherRequest(Location location, WeatherOnDay[] weatherOnDays) {
+    String formatGetWeatherRequest(Location location, Forecast forecast) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("'On' EEEE yyyy-MM-dd");
         DecimalFormat df = new DecimalFormat("##");
         StringBuilder builder =
                 new StringBuilder("Weather for ")
                         .append(location.getTitle())
                         .append(":");
-        for (WeatherOnDay weather : weatherOnDays) {
+        for (WeatherOnDay weather : forecast.getConsolidatedWeather()) {
             builder
                     .append(System.lineSeparator())
                         .append(dateFormat.format(weather.getDate()))

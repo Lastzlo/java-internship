@@ -1,8 +1,8 @@
 package com.example.demo;
 
-import com.example.demo.dto.FiveDayForecast;
-import com.example.demo.dto.Location;
-import com.example.demo.dto.WeatherOnDay;
+import com.example.demo.models.Forecast;
+import com.example.demo.models.Location;
+import com.example.demo.models.WeatherOnDay;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -128,9 +128,9 @@ public class TestLearnCases {
                         //specify jackson to use fields (without getters-setters)
                         .setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE)
                         .setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-        FiveDayForecast forecast = mapper
-                .readValue(body, FiveDayForecast.class);
-        WeatherOnDay[] weatherOnDays = forecast.getConsolidated_weather();
+        Forecast forecast = mapper
+                .readValue(body, Forecast.class);
+        WeatherOnDay[] weatherOnDays = forecast.getConsolidatedWeather();
         for(WeatherOnDay weather: weatherOnDays)
             System.out.println("weather = " + weather);
 
