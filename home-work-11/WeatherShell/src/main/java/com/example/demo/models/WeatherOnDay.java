@@ -14,10 +14,10 @@ public class WeatherOnDay {
     private String weatherState;
 
     @JsonProperty("min_temp")
-    private double minTemperature;
+    private int minTemperature;
 
     @JsonProperty("max_temp")
-    private double maxTemperature;
+    private int maxTemperature;
 
     public Date getDate() {
         return date;
