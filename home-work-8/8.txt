@@ -1,4 +1,4 @@
-#HomeWork 8 (завдання на 23 вересня):
+#HomeWork 8 (завдання на 24 вересня):
 https://www.youtube.com/watch?v=QZdeablf8v4
 Spring Boot, Spring Core, Spring Shell
 Створюєм консольну APP.
@@ -7,7 +7,7 @@ Read:
 https://www.baeldung.com/spring-inject-prototype-bean-into-singleton
 
 
-№lesson 7
+#lesson 7
 Reminder, ООП, Reflection, Spring, IOC
 
 Аспектно орієнтоване програмування
@@ -23,5 +23,3 @@ DI краще робити через конструктор
 Розкажи жизненний цикл біна
 
 https://itsobes.ru/JavaSobes/kak-rabotaet-inuekciya-prototipa-v-singlton/
-
-
