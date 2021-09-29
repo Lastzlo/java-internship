@@ -60,4 +60,13 @@ public class WeatherService {
         int currLocationWoeid = locationsRepo.getCurrLocation().getWoeid();
         return metaweatherRepo.getForecast(currLocationWoeid);
     }
+
+    public Optional<Forecast> getForecastOnLocation(String locationName) {
+        Location[] locations = findLocationsWithName(locationName);
+        if(locations.length == 1) {
+            Integer locationWoeid = locations[0].getWoeid();
+            return Optional.of(metaweatherRepo.getForecast(locationWoeid));
+        }
+        return Optional.empty();
+    }
 }
