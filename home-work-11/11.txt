@@ -1,0 +1,54 @@
+#HomeWork 11 (завдання на 30 вересня):
+1) Командно доробляєм API системи ☑
+2) До Spring Shell App робим RestAPI. Test Postman and Http Client in IDE.
+3) Servlets and Filters
+   Create custom servlets and filter
+   1) Filter read header (Security)
+   2) Servlet implement custom methods
+https://www.baeldung.com/spring-boot-add-filter
+https://www.youtube.com/watch?v=0G9RwERp0TU&list=PL786bPIlqEjRVDNpxzgLv9iMmB4y5kMfT&index=6
+4) GOF Chain of responsibility in Filters
+5) https://www.youtube.com/watch?v=FE7ygm8CTaY&list=PL786bPIlqEjRVDNpxzgLv9iMmB4y5kMfT
+
+Find. How to add new methods in Http
+
+
+#Lesson 10 (27 вересня)
+1) Коди помилок
+2) https://tproger.ru/translations/luchshie-praktiki-razrabotki-rest-api-20-sovetov/
+3) Difference between @RestController and @Controller Annotation in Spring MVC and REST
+https://www.javacodegeeks.com/2017/08/difference-restcontroller-controller-annotation-spring-mvc-rest.html#:~:text=The%20%40Controller%20is%20a%20common,of%20%40Controller%20%2B%20%40ResponseBody%20.
+4) 
+
+questions:
+	Методи HTTP
+		GET
+		POST
+
+	Список_кодов_состояния_HTTP
+	https://ru.wikipedia.org/wiki/%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA_%D0%BA%D0%BE%D0%B4%D0%BE%D0%B2_%D1%81%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D0%BD%D0%B8%D1%8F_HTTP
+
+	tomcat addcustom http method
+
+	chain of responsibility java
+
+	що таке сервлет що таке фільтр
+
+	//spring helth actuator to idea
+	https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html
+
+	11. Указывайте количество ресурсов в ответе на запрос
+	використовується в пагінації
+
+	13. Используйте параметр fields
+	граф QL для динамічних ентіті
+
+	18. CORS
+
+	xx autorisation
+
+	життевий цикл сервлета
+
+	в томкат закинути варник
+
+	autification proncipals
