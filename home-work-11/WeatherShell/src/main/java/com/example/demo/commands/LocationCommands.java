@@ -29,7 +29,6 @@ public class LocationCommands {
     }
 
     String formatSearchLocationRequest(String name, Location[] locations) {
-        if(locations.length == 0) return "Not found location with name: " + name;
         if(locations.length == 1) {
             return locations[0].toString();
         }
