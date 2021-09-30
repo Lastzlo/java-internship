@@ -36,6 +36,8 @@ public class MetaweatherRepo {
             Forecast forecast = restTemplate.getForObject(Url, Forecast.class);
             if (forecast.getConsolidatedWeather().length == 0) return Optional.empty();
             return Optional.of(forecast);
+        } catch (HttpClientErrorException.NotFound e) {
+            return Optional.empty();
         } catch (HttpClientErrorException e) {
             throw new MetaweatherRepoException();
         }
