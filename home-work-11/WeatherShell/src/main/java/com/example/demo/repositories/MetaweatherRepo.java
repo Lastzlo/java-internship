@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Optional;
+
 @Repository
 public class MetaweatherRepo {
 
@@ -28,10 +30,12 @@ public class MetaweatherRepo {
         }
     }
 
-    public Forecast getForecast(int currLocationWoeid) {
+    public Optional<Forecast> getForecast(int currLocationWoeid) {
         String Url = LOCATION_WEATHER_URL + currLocationWoeid + "/";
         try {
-            return restTemplate.getForObject(Url, Forecast.class);
+            Forecast forecast = restTemplate.getForObject(Url, Forecast.class);
+            if (forecast.getConsolidatedWeather().length == 0) return Optional.empty();
+            return Optional.of(forecast);
         } catch (HttpClientErrorException e) {
             throw new MetaweatherRepoException();
         }
