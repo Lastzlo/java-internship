@@ -8,6 +8,8 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellMethodAvailability;
 
+import java.util.Optional;
+
 @ShellComponent
 public class ForecastCommands {
 
@@ -24,8 +26,12 @@ public class ForecastCommands {
     @ShellMethodAvailability("getWeatherAvailabilityCheck")
     public String getWeather(int locationId) {
         if(locationService.isInvalidId(locationId)) return "Invalid location id";
-        Forecast forecast = forecastService.getForecastByLocationId(locationId).get();
-        return forecast.toString();
+        Optional<Forecast> forecastByLocationId = forecastService.getForecastByLocationId(locationId);
+        if(forecastByLocationId.isPresent()) {
+            return forecastByLocationId.get().toString();
+        } else {
+            return "No forecast for location";
+        }
     }
 
 }
