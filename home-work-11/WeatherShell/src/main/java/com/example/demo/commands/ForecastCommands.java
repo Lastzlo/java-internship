@@ -6,7 +6,6 @@ import com.example.demo.services.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import org.springframework.shell.standard.ShellMethodAvailability;
 
 import java.util.Optional;
 
@@ -22,9 +21,8 @@ public class ForecastCommands {
         this.locationService = locationService;
     }
 
-    @ShellMethod(value = "Return forecast for current location", key = {"weather", "get"})
-    @ShellMethodAvailability("getWeatherAvailabilityCheck")
-    public String getWeather(int locationId) {
+    @ShellMethod(value = "Return forecast for current location", key = {"forecast", "get"})
+    public String getForecast(int locationId) {
         if(locationService.isInvalidId(locationId)) return "Invalid location id";
         Optional<Forecast> forecastByLocationId = forecastService.getForecastByLocationId(locationId);
         if(forecastByLocationId.isPresent()) {
