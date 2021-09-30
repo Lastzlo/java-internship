@@ -8,11 +8,9 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 
-class WeatherCommandsTest {
+class ForecastCommandsTest {
 
     static WeatherOnDay[] weatherOnDays;
     static Forecast forecast;
@@ -136,14 +134,4 @@ class WeatherCommandsTest {
                 .readValue(body, Location[].class)[0];
     }
 
-
-
-    @Test
-    void formatGetWeatherRequest() {
-        WeatherCommands commands = new WeatherCommands(null);
-        String actual = commands.formatGetWeatherRequest(location, forecast);
-        System.out.println(actual);
-
-        Assertions.assertEquals(182, actual.length());
-    }
 }
